@@ -6,6 +6,8 @@ base_dir = os.path.dirname(os.path.abspath(__file__))  # gets folder where the P
 
 app=Flask(__name__)
 
+# # load csv into dataframe
+# df = pd.read_csv('d1_players_filtered.csv')
 
 @app.route("/")
 def index():
@@ -64,11 +66,11 @@ def index():
 def teams():
     division = request.args.get('division', 'd1')
     if division == 'd3':
-        df = pd.read_csv('/Users/Dhruv/VScode/Python Start Project/CSVs/d3_players_filtered.csv')
-        df2 = pd.read_csv('/Users/Dhruv/VScode/Python Start Project/CSVs/d3_teams_links_numbers.csv')
+        df = pd.read_csv(os.path.join(base_dir, 'CSVs', 'd3_players_filtered.csv'))
+        df2 = pd.read_csv(os.path.join(base_dir, 'CSVs', 'd3_teams_links_numbers.csv'))
     else:
-        df = pd.read_csv('d1_players_filtered.csv')
-        df2 = pd.read_csv('/Users/Dhruv/VScode/Python Start Project/CSVs/d1_teams_links_numbers.csv')
+        df = pd.read_csv(os.path.join(base_dir, 'CSVs', 'd1_players_filtered.csv'))
+        df2 = pd.read_csv(os.path.join(base_dir, 'CSVs', 'd1_teams_links_numbers.csv'))
 
     grouped_teams = df.groupby('team')
     team_data = {}
