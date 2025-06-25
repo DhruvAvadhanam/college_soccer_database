@@ -4,10 +4,20 @@
     <title>College Soccer Teams</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='teams.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
 </head>
 
 <body>
-    
+    <nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-logo">College Soccer DB</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/teams" class="nav-link">Teams</a>
+        </div>
+    </div>
+    </nav>
+
     <h1>College Soccer Teams</h1>
     
     <form method="get" action="/teams">
