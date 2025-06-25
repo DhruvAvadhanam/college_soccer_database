@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: college-soccer-database-app
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn database_page:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
+    autoDeploy: true
+    branch: main
