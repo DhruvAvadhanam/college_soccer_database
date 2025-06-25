@@ -1,0 +1,93 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>College Soccer Teams</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='teams.css') }}">
+</head>
+
+<body>
+    
+    <h1>College Soccer Teams</h1>
+    
+    <form method="get" action="/teams">
+        <button type="submit" name="division" value="d1">D1 teams</button>
+        <button type="submit" name="division" value="d3">D3 teams</button>
+    </form>
+
+        <!-- Team Cards -->
+    {% for team, data in teams.items() %}
+        <div class="team-card" onclick="openPopup('{{ team }}')">
+            <h3>{{ team }}</h3>
+            <p>{{ data.playerList|length }} players</p>
+        </div>
+
+        <!-- Hidden popup for each team -->
+        <div class="popup" id="popup-{{ team|replace(' ', '-') }}">
+            <span class="popup-close" onclick="closePopup('{{ team }}')">&times;</span>
+            <h3>{{ team }}</h3>
+
+            <h4>Roster Link:</h4>
+            <a href="{{ data.rosterLink }}" target="_blank"><strong>{{ data.rosterLink }}</strong></a>
+
+            <h4>State/Country Breakdown:</h4>
+            <ul>
+                {% for state, count in data.stateCounts.items() %}
+                    <li>{{ state }}: {{ count }}</li>
+                {% endfor %}
+            </ul>
+
+            <h4>Position Breakdown:</h4>
+            <ul>
+                {% for position, count in data.positionCounts.items() %}
+                    <li>{{ position }}: {{ count }}</li>
+                {% endfor %}
+            </ul>
+
+            <h4>Graduating Class Breakdown:</h4>
+            <ul>
+                {% for gradClass, count in data.gradCounts.items() %}
+                    <li>{{ gradClass }}: {{ count }}</li>
+                {% endfor %}
+            </ul>
+
+            <h4>Key Recruiting Facts for {{ team }}:</h4>
+            <ul>
+                {% for fact in data.keyFacts %}
+                    <li><strong>{{ fact }}</strong></li>
+                {% endfor %}
+            </ul>
+
+            <h4>Full Roster List:</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Position</th>
+                        <th>Height</th>
+                        <th>Weight</th>
+                        <th>Hometown</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in data.playerList %}
+                        <tr>
+                            <td>{{ player.name }}</td>
+                            <td>{{ player.gradClass }}</td>
+                            <td>{{ player.position }}</td>
+                            <td>{{ player.height }}</td>
+                            <td>{{ player.weight }}</td>
+                            <td>{{ player.homeTown_city }}, {{ player.homeTown_state }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+
+    <script src="{{ url_for('static', filename='teams.js') }}"></script>
+
+</body>
+
+</html>

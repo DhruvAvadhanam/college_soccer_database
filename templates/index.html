@@ -1,0 +1,123 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>College Soccer Player Database</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h1>College Soccer Player Database</h1>
+
+    <form method="get" action="/">
+        <button type="submit" name="division" value="d1">D1 players</button>
+        <button type="submit" name="division" value="d3">D3 players</button>
+    </form>
+
+    <!-- display the filters and values -->
+    <form method="get">
+
+    <input type="hidden" name="division" value="{{ request.args.get('division', 'd1') }}">
+
+    <label for="team">Team:</label>
+    <select id="team-filter" name="team" multiple>
+        {% for team in teams %}
+            <option value="{{ team }}" {% if team in request.args.getlist('team') %}selected{% endif %}>{{ team }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="gradClass">Class:</label>
+    <select id="class-filter" name="gradClass" multiple>
+        {% for gradClass in classes %}
+            <option value="{{ gradClass }}" {% if gradClass in request.args.getlist('class') %}selected{% endif %}>{{ gradClass }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="position">Position:</label>
+    <select id="position-filter" name="position" multiple>
+        {% for position in positions %}
+            <option value="{{ position }}" {% if position in request.args.getlist('position') %}selected{% endif %}>{{ position }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="weight">Weight:</label>
+    <select id="weight-filter" name="weight_group" multiple>
+        {% for weight in weights %}
+            <option value="{{ weight }}" {% if weight in request.args.getlist('weight') %}selected{% endif %}>{{ weight }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="height">Height:</label>
+    <select id="height-filter" name="height_group" multiple>
+        {% for height in heights %}
+            <option value="{{ height }}" {% if height in request.args.getlist('height_group') %}selected{% endif %}>{{ height }}</option>
+        {% endfor %}
+    </select>
+
+
+    <label for="region">State/Country:</label>
+    <select id="region-filter" name="region" multiple>
+        {% for state in hometown_states %}
+            <option value="{{ state }}" {% if state in request.args.getlist('region') %}selected{% endif %}>{{ state }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Apply Filters</button>
+
+</form>
+
+
+
+    <!-- table to display the data -->
+    <table id="player-table">
+        <thead>
+            <tr>
+                <!-- categories for the data -->
+                <th>Name</th>
+                <th>Team</th>
+                <th>Class</th>
+                <th>Position</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>High School</th>
+                <th>Hometown (City)</th>
+                <th>Hometown (Region)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr 
+                    data-name="{{ player.name }}"
+                    data-team="{{ player.team }}"
+                    data-class="{{ player.gradClass }}"
+                    data-position="{{ player.position }}"
+                    data-weight="{{ player.weight }}"
+                    data-height="{{ player.height }}"
+                    data-highschool="{{ player.highSchool }}"
+                    data-city="{{ player.homeTown_city }}"
+                    data-region="{{ player.homeTown_state }}"
+                >
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.team }}</td>
+                    <td>{{ player.gradClass }}</td>
+                    <td>{{ player.position }}</td>
+                    <td>{{ player.height }}</td>
+                    <td>{{ player.weight }}</td>
+                    <td>{{ player.highSchool }}</td>
+                    <td>{{ player.homeTown_city }}</td>
+                    <td>{{ player.homeTown_state }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<!-- jQuery + Select2 JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{ url_for('static', filename='select2.js') }}"></script>
+
+</body>
+
+</html>

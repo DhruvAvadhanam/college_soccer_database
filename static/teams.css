@@ -1,0 +1,40 @@
+.team-card {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.team-card:hover {
+    background-color: #f3f3f3;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    max-height: 90%;
+    background-color: white;
+    border: 2px solid #333;
+    padding: 1rem;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.popup.active {
+    display: block;
+}
+
+.popup-close {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.popup h3 {
+    margin-top: 0;
+}
