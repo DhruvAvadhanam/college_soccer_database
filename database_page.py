@@ -1,19 +1,20 @@
 from flask import Flask, render_template, request
 import pandas as pd
+import os
+
+base_dir = os.path.dirname(os.path.abspath(__file__))  # gets folder where the Python script lives
 
 app=Flask(__name__)
 
-# # load csv into dataframe
-# df = pd.read_csv('d1_players_filtered.csv')
 
 @app.route("/")
 def index():
 
     division = request.args.get('division', 'd1')
     if division == 'd3':
-        df = pd.read_csv('/Users/Dhruv/VScode/Python Start Project/CSVs/d3_players_filtered.csv')
+        df = pd.read_csv(os.path.join(base_dir, 'CSVs', 'd3_players_filtered.csv'))
     else:
-        df = pd.read_csv('/Users/Dhruv/VScode/Python Start Project/CSVs/d1_players_filtered.csv')
+        df = pd.read_csv(os.path.join(base_dir, 'CSVs', 'd1_players_filtered.csv'))
 
     team_filter=request.args.getlist('team')
     position_filter=request.args.getlist('position')
